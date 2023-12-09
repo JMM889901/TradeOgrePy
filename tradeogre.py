@@ -88,10 +88,19 @@ class TradeOgre(object):
         :param market: market such as 'BTC-XMR'
         :type market: str
 
-        :returns: :py:meth:`requests.Response.json`-deserialised Python object
-
         """
         self.response = requests.get(self.uri + '/history/' + market).json()
+        return self.response
+
+    def self_history(self, market):
+        """ Retrieve the history of your last trades on {market}, limited to 100 
+        of the most recent trades. The date is a Unix UTC timestamp.
+
+        :param market: market such as 'BTC-XMR'
+        :type market: str
+        
+        """
+        self.response = requests.post(self.uri + '/account/market/history', auth=(key, secret)).json()
         return self.response
 
     def balance(self, currency, key=None, secret=None):
